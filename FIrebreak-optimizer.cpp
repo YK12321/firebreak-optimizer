@@ -1,7 +1,8 @@
 #include <iostream>
- 
+#include <vector>
+
 using namespace std;
- 
+
 int main()
 {
     int maxY, maxX;
@@ -9,27 +10,27 @@ int main()
     cin >> maxY;
     cout << "Enter the number of columns (maxX): ";
     cin >> maxX;
- 
-    int **ArrayMap = new int *[maxY];
-    int **FireMap = new int *[maxY];
-    int **OptimalFirebreaks = new int *[maxY];
- 
+
+    vector<vector<int>> ArrayMap(maxY, vector<int>(maxX));
+    vector<vector<int>> FireMap(maxY, vector<int>(maxX));
+    vector<vector<int>> OptimalFirebreaks(maxY, vector<int>(maxX, 0));
+
+    cout << "Entering Fire hazard level:" << endl;
     for (int y = 0; y < maxY; y++) {
-        ArrayMap[y] = new int[maxX];
-        FireMap[y] = new int[maxX];
-        OptimalFirebreaks[y] = new int[maxX];
-    }
- 
-    for (int y = 0; y < maxY; y++) {
+        cout << "Row " << y + 1 << ":" << endl;
         for (int x = 0; x < maxX; x++) {
-            cout << "Enter a fire risk level (0, 1, 2, or 3) for ";
-            cout << "Y = " << y << ", X = " << x << endl;
             cin >> ArrayMap[y][x];
-            cout << "Now enter current fire state (1 for burning, 0 for not burning): ";
+        }
+    }
+
+    cout << "Entering fire state:" << endl;
+    for (int y = 0; y < maxY; y++) {
+        cout << "Row " << y + 1 << ":" << endl;
+        for (int x = 0; x < maxX; x++) {
             cin >> FireMap[y][x];
         }
     }
- 
+
     for (int y = 0; y < maxY; y++) {
         for (int x = 0; x < maxX; x++) {
             if (FireMap[y][x] == 1) {
@@ -44,7 +45,7 @@ int main()
             }
         }
     }
- 
+
     cout << "Optimal Firebreak Positions:" << endl;
     for (int y = 0; y < maxY; y++) {
         for (int x = 0; x < maxX; x++) {
@@ -52,17 +53,6 @@ int main()
         }
         cout << endl;
     }
- 
-    // Deallocate memory
-    for (int y = 0; y < maxY; y++) {
-        delete[] ArrayMap[y];
-        delete[] FireMap[y];
-        delete[] OptimalFirebreaks[y];
-    }
-    delete[] ArrayMap;
-    delete[] FireMap;
-    delete[] OptimalFirebreaks;
- 
+
     return 0;
 }
- 
